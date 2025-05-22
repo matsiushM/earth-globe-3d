@@ -2,7 +2,7 @@ import {useRef} from "react";
 import * as THREE from 'three'
 import {useFrame} from '@react-three/fiber'
 import {useTexture} from '@react-three/drei'
-import Markers from "./Matkers.tsx";
+import Markers from "./Markers.tsx";
 import Arc from "./Arc.tsx";
 
 import vertexShader from '../shaders/earth.vert.js'
@@ -20,7 +20,7 @@ export default function Earth() {
     const cloudsRef = useRef();
 
     const coords = [
-        { lat: 55.7558, lon: 37.6173 },
+        { lat: 55.7558, lon: 47.6173 },
         { lat: 40.7128, lon: -74.0060 },
     ];
 
@@ -32,8 +32,7 @@ export default function Earth() {
 
     return (
         <>
-            <directionalLight position={[5, 5, 5]} intensity={1.5} />
-            <ambientLight intensity={0.5} />
+            <directionalLight position={[5, 5, 5]} intensity={3} />
 
             <mesh ref={earthRef}>
                 <sphereGeometry args={[1, 128, 128]} />
@@ -45,15 +44,16 @@ export default function Earth() {
                         nightTexture: { value: nightTexture },
                         heightMap: { value: heightMap },
                         lightDirection: { value: new THREE.Vector3(5, 5, 5).normalize() },
-                        displacementScale: { value: 0.06},
+                        displacementScale: { value: 0.6 },
+
                     }}
                 />
-                <Markers coords={coords} />
                 <Arc coords={coords} />
+                <Markers coords={coords} />
             </mesh>
 
             <mesh ref={cloudsRef}>
-                <sphereGeometry args={[1.06, 128, 128]}/>
+                <sphereGeometry args={[1.005, 128, 128]} />
                 <meshPhongMaterial
                     map={cloudMap}
                     transparent
